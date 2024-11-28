@@ -195,7 +195,7 @@ const App: React.FC = () => {
       </div>
 
       {/* Footer */}
-      <footer className="bg-white mt-6">
+      <footer className="bg-white mt-6 text-gray-600">
         <nav className="flex justify-around py-4">
           <a href="/inicial" className="flex flex-col items-center hover:text-blue-500">
             <FaHome size={24} />

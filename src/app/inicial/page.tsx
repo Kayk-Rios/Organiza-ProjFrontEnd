@@ -173,7 +173,7 @@ const HomePage: React.FC = () => {
       </div>
 
       {/* Footer */}
-      <footer className="bg-white shadow-md p-4">
+      <footer className="bg-white shadow-md p-4 text-gray-600">
         <nav className="flex justify-around">
           <a
             href="/inicial"
