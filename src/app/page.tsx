@@ -2,41 +2,11 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
+import Login from "./login/page";
+import Cadastro from "./cadastro/page";
 
 export default function Page() {
   const [isLoginPage, setIsLoginPage] = useState(true); // Estado para alternar entre Login e Cadastro
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const router = useRouter(); // Hook para redirecionar
-
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if(email === localStorage.getItem("email") &&
-        password === localStorage.getItem("password")
-    ){
-      alert("Usuario logado com sucesso.")
-      window.location.assign("/investimentos");
-    } else {
-      alert("Falha no login")
-    }
-
-  };
-
-  function handleRegister(e: React.FormEvent) {
-    e.preventDefault();
-
-    console.log(email, password);
-
-    localStorage.setItem("email",email)
-    localStorage.setItem("password",password)
-    alert("Conta criada.")
-
-    window.location.assign("/")
-
-  };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 px-4 sm:px-6 lg:px-8">
@@ -59,85 +29,10 @@ export default function Page() {
       <div className="w-full max-w-md p-6 rounded-lg shadow-lg bg-gradient-to-b from-green-100 to-green-500 sm:max-w-lg lg:max-w-xl">
         {isLoginPage ? (
           // Formulário de Login
-          <form className="space-y-4" onSubmit={handleLogin}>
-            <div>
-              <label className="block text-sm text-gray-700">E-mail:</label>
-              <input
-                type="email"
-                placeholder="Digite seu e-mail"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-3 py-2 mt-1 border rounded-md focus:ring focus:ring-green-300 focus:outline-none"
-              />
-            </div>
-            <div>
-              <label className="block text-sm text-gray-700">Senha:</label>
-              <input
-                type="password"
-                placeholder="Digite sua senha"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3 py-2 mt-1 border rounded-md focus:ring focus:ring-green-300 focus:outline-none"
-              />
-            </div>
-            <div className="flex justify-end">
-              <a href="#" className="text-sm text-green-700 hover:underline">
-                Esqueci minha senha
-              </a>
-            </div>
-            <button
-              type="submit"
-              className="w-full px-4 py-2 text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none"
-            >
-              Entrar
-            </button>
-          </form>
+         <Login/>
         ) : (
           // Formulário de Cadastro
-          <form className="space-y-4" onSubmit={handleRegister}>
-            <div>
-              <label className="block text-sm text-gray-700">Nome:</label>
-              <input
-                type="text"
-                placeholder="Digite seu nome"
-                className="w-full px-3 py-2 mt-1 border rounded-md focus:ring focus:ring-green-300 focus:outline-none"
-              />
-            </div>
-            <div>
-              <label className="block text-sm text-gray-700">E-mail:</label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Digite seu e-mail"
-                className="w-full px-3 py-2 mt-1 border rounded-md focus:ring focus:ring-green-300 focus:outline-none"
-              />
-            </div>
-            <div>
-              <label className="block text-sm text-gray-700">Senha:</label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Digite sua senha"
-                className="w-full px-3 py-2 mt-1 border rounded-md focus:ring focus:ring-green-300 focus:outline-none"
-              />
-            </div>
-            <div>
-              <label className="block text-sm text-gray-700">Confirmar Senha:</label>
-              <input
-                type="password"
-                placeholder="Confirme sua senha"
-                className="w-full px-3 py-2 mt-1 border rounded-md focus:ring focus:ring-green-300 focus:outline-none"
-              />
-            </div>
-            <button
-              type="submit"
-              className="w-full px-4 py-2 text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none"
-            >
-              Criar Conta
-            </button>
-          </form>
+          <Cadastro/>
         )}
 
         <p className="mt-4 text-center text-sm text-gray-800">

@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import {
   FaHome,
@@ -10,6 +11,9 @@ import {
   FaBars,
   FaTimes,
 } from "react-icons/fa";
+
+import Menu from "../menu/menu";
+
 
 interface Transacao {
   tipo: "receita" | "despesa";
@@ -35,6 +39,14 @@ const App: React.FC = () => {
     descricao: "",
   });
   const [activeTab, setActiveTab] = useState<"receita" | "despesa">("receita");
+  useEffect(() => {
+
+    const loggedIn = Cookies.get("loggedIn");
+    
+    if (!loggedIn) {
+      router.push("/");
+    }
+  }, [router]);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -62,11 +74,6 @@ const App: React.FC = () => {
     setTransacoes(transacoes.filter((_, i) => i !== index));
   };
 
-  const handleNavigation = (path: string) => {
-    setMenuOpen(false); // Fecha o menu ao navegar
-    router.push(path); // Navega para a rota especificada
-  };
-
   return (
     <div className="bg-[#16A34A] min-h-screen flex flex-col">
       {/* Header com Menu Sanduíche */}
@@ -89,44 +96,7 @@ const App: React.FC = () => {
           </button>
           {menuOpen && (
             <div className="absolute top-12 right-0 bg-white shadow-lg rounded-lg w-48">
-              <nav className="flex flex-col p-4 space-y-2">
-                <button
-                  onClick={() => handleNavigation("/inicial")}
-                  className="text-gray-700 hover:text-blue-500"
-                >
-                  Início
-                </button>
-                <button
-                  onClick={() => handleNavigation("/receitas-despesas")}
-                  className="text-gray-700 hover:text-blue-500"
-                >
-                  Receitas e Despesas
-                </button>
-                <button
-                  onClick={() => handleNavigation("/orcamento")}
-                  className="text-gray-700 hover:text-blue-500"
-                >
-                  Orçamento
-                </button>
-                <button
-                  onClick={() => handleNavigation("/investimentos")}
-                  className="text-gray-700 hover:text-blue-500"
-                >
-                  Investimentos
-                </button>
-                <button
-                  onClick={() => handleNavigation("/configuracoes")}
-                  className="text-gray-700 hover:text-blue-500"
-                >
-                  Configurações
-                </button>
-                <button
-                  onClick={() => handleNavigation("/")}
-                  className="text-red-600 hover:text-red-800"
-                >
-                  Logout
-                </button>
-              </nav>
+              <Menu/>
             </div>
           )}
         </div>
