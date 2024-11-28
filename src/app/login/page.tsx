@@ -23,7 +23,7 @@ export default function Login(){
        if (email === storedUseremail  && password === storedPassword) {
         alert("login bem sucedido")
         Cookies.set("loggedIn", "true")
-        router.push("/investimentos")
+        router.push("/inicial");
        }
     };
    
