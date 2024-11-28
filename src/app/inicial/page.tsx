@@ -126,7 +126,7 @@ const HomePage: React.FC = () => {
                 Configurações
               </button>
               <button
-                onClick={() => handleNavigation("/app")}
+                onClick={() => handleNavigation("/")}
                 className="text-red-600 hover:text-red-800"
               >
                 Logout
