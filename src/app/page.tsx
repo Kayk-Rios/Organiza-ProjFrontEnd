@@ -14,22 +14,25 @@ export default function Page() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (email && password) {
-      const result = await signIn("credentials", {
-        email,
-        password,
-        redirect: false, // Não faz o redirecionamento automaticamente
-      });
-
-      if (result?.error) {
-        alert("Falha na autenticação. Tente novamente.");
-      } else {
-        console.log("Usuário autenticado:", email);
-        router.push("/investimentos/page.tsx");
-      }
+    if(email === localStorage.getItem("email") &&
+        password === localStorage.getItem("password")
+    ){
+      alert("Usuario logado com sucesso.")
+      window.location.assign("/investimentos");
     } else {
-      alert("Por favor, preencha todos os campos!");
+      alert("Falha no login")
     }
+
+  };
+
+  function handleRegister(e: React.FormEvent) {
+    e.preventDefault();
+
+    console.log(email, password);
+
+    localStorage.setItem("email",email)
+    localStorage.setItem("password",password)
+
   };
 
   return (
@@ -88,7 +91,7 @@ export default function Page() {
           </form>
         ) : (
           // Formulário de Cadastro
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handleRegister}>
             <div>
               <label className="block text-sm text-gray-700">Nome:</label>
               <input
@@ -101,6 +104,8 @@ export default function Page() {
               <label className="block text-sm text-gray-700">E-mail:</label>
               <input
                 type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="Digite seu e-mail"
                 className="w-full px-3 py-2 mt-1 border rounded-md focus:ring focus:ring-green-300 focus:outline-none"
               />
@@ -109,6 +114,8 @@ export default function Page() {
               <label className="block text-sm text-gray-700">Senha:</label>
               <input
                 type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 placeholder="Digite sua senha"
                 className="w-full px-3 py-2 mt-1 border rounded-md focus:ring focus:ring-green-300 focus:outline-none"
               />

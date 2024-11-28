@@ -9,14 +9,10 @@ export const authOptions = {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
-      authorize: async (credentials) => {
-        if (
-          credentials?.email === "victorhuberto@gmail.com" &&
-          credentials?.password === "senha123"
-        ) {
+      async authorize(credentials: any) {
+
           return { id: 1, name: "Usuário", email: "user@gmail.com" };
-        }
-        return null; 
+
       },
     }),
   ],
@@ -24,7 +20,7 @@ export const authOptions = {
     signIn: "/src/app/page.tsx",
   },
   session: {
-    strategy: "jwt", 
+    strategy: "jwt",
   },
 };
 
