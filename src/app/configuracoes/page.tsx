@@ -1,8 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { FaHome, FaChartLine, FaWallet, FaCog, FaBars, FaTimes } from "react-icons/fa";
+import Menu from "../menu/menu";
 
 const Configuracoes: React.FC = () => {
   const router = useRouter();
@@ -12,12 +14,15 @@ const Configuracoes: React.FC = () => {
   const [emailNotificacoes, setEmailNotificacoes] = useState(false);
   const [idioma, setIdioma] = useState("pt-br");
   const [novaSenha, setNovaSenha] = useState("");
+  useEffect(() => {
 
-  const handleNavigation = (path: string) => {
-    setMenuOpen(false); // Fecha o menu ao navegar
-    router.push(path); // Navega para a rota especificada
-  };
-
+    const loggedIn = Cookies.get("loggedIn");
+    
+    if (!loggedIn) {
+      router.push("/");
+    }
+  }, [router]);
+ 
   const handleSalvarSenha = () => {
     if (novaSenha.trim() === "") {
       alert("Por favor, insira uma nova senha.");
@@ -60,38 +65,7 @@ const Configuracoes: React.FC = () => {
             </button>
             {menuOpen && (
               <div className="absolute top-10 right-0 bg-white shadow-lg rounded-lg w-40">
-                <nav className="flex flex-col p-2">
-                  <button
-                    onClick={() => handleNavigation("/inicial")}
-                    className="text-gray-700 hover:text-blue-500 py-2 text-left"
-                  >
-                    Início
-                  </button>
-                  <button
-                    onClick={() => handleNavigation("/receitas-despesas")}
-                    className="text-gray-700 hover:text-blue-500 py-2 text-left"
-                  >
-                    Receitas e Despesas
-                  </button>
-                  <button
-                    onClick={() => handleNavigation("/orcamento")}
-                    className="text-gray-700 hover:text-blue-500 py-2 text-left"
-                  >
-                    Orçamento
-                  </button>
-                  <button
-                    onClick={() => handleNavigation("/investimentos")}
-                    className="text-gray-700 hover:text-blue-500 py-2 text-left"
-                  >
-                    Investimentos
-                  </button>
-                  <button
-                    onClick={() => handleNavigation("/")}
-                    className="text-red-600 hover:text-red-800 py-2 text-left"
-                  >
-                    Logout
-                  </button>
-                </nav>
+              <Menu/>
               </div>
             )}
           </div>

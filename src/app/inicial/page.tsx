@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
 import {
   FaBars,
   FaTimes,
@@ -22,6 +21,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import Menu from "../menu/menu";
 
 type DashboardData = {
   [key: string]: { name: string; despesas: number; receitas: number }[];
@@ -29,7 +29,6 @@ type DashboardData = {
 
 const HomePage: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const router = useRouter(); // Navegação programática
 
   const overviewData = [
     { title: "Saldo Atual", value: "R$15.230,50", change: "+5%", type: "positive" },
@@ -63,10 +62,7 @@ const HomePage: React.FC = () => {
 
   const selectedData = dashboardData[selectedMonth];
 
-  const handleNavigation = (path: string) => {
-    setMenuOpen(false); // Fecha o menu após clicar
-    router.push(path); // Redireciona para a rota
-  };
+ 
 
   return (
     <main className="bg-[#16A34A] min-h-screen flex flex-col">
@@ -94,44 +90,7 @@ const HomePage: React.FC = () => {
         {/* Menu Dropdown */}
         {menuOpen && (
           <div className="absolute top-12 right-4 bg-white shadow-lg rounded-lg w-48 z-50">
-            <nav className="flex flex-col p-4 space-y-2">
-              <button
-                onClick={() => handleNavigation("/inicial")}
-                className="text-gray-700 hover:text-blue-500"
-              >
-                Início
-              </button>
-              <button
-                onClick={() => handleNavigation("/receitas-despesas")}
-                className="text-gray-700 hover:text-blue-500"
-              >
-                Receitas e Despesas
-              </button>
-              <button
-                onClick={() => handleNavigation("/orcamento")}
-                className="text-gray-700 hover:text-blue-500"
-              >
-                Orçamento
-              </button>
-              <button
-                onClick={() => handleNavigation("/investimentos")}
-                className="text-gray-700 hover:text-blue-500"
-              >
-                Investimentos
-              </button>
-              <button
-                onClick={() => handleNavigation("/configuracoes")}
-                className="text-gray-700 hover:text-blue-500"
-              >
-                Configurações
-              </button>
-              <button
-                onClick={() => handleNavigation("/")}
-                className="text-red-600 hover:text-red-800"
-              >
-                Logout
-              </button>
-            </nav>
+           <Menu/>
           </div>
         )}
       </div>
