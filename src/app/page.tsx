@@ -32,6 +32,9 @@ export default function Page() {
 
     localStorage.setItem("email",email)
     localStorage.setItem("password",password)
+    alert("Conta criada.")
+
+    window.location.assign("/")
 
   };
 
