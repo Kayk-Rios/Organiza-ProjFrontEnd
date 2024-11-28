@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 export default function Page() {
   const [isLoginPage, setIsLoginPage] = useState(true); // Estado para alternar entre Login e Cadastro
@@ -10,12 +11,22 @@ export default function Page() {
   const [password, setPassword] = useState("");
   const router = useRouter(); // Hook para redirecionar
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (email && password) {
-      console.log("Usuário autenticado:", email);
-      router.push("/inicial"); // Redireciona para a página inicial
+      const result = await signIn("credentials", {
+        email,
+        password,
+        redirect: false, // Não faz o redirecionamento automaticamente
+      });
+
+      if (result?.error) {
+        alert("Falha na autenticação. Tente novamente.");
+      } else {
+        console.log("Usuário autenticado:", email);
+        router.push("/investimentos/page.tsx");
+      }
     } else {
       alert("Por favor, preencha todos os campos!");
     }
@@ -76,7 +87,7 @@ export default function Page() {
             </button>
           </form>
         ) : (
-          // Formulário de Cadastro
+          // Formulário de Cadastro (Não alterado)
           <form className="space-y-4">
             <div>
               <label className="block text-sm text-gray-700">Nome:</label>
