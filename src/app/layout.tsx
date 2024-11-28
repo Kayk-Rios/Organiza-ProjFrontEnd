@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+/*import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
@@ -30,6 +30,24 @@ export default function RootLayout({
       >
         {children}
       </body>
+    </html>
+  );
+}
+*/ import "@/app/globals.css";
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+   <html lang="en">
+      /*<body>
+        <header className="p-4 text-white">
+        
+        </header>
+        <main>{children}</main>
+      </body>*/
     </html>
   );
 }
